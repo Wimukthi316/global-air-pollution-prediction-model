@@ -19,13 +19,20 @@ st.set_page_config(
 def load_models():
     """Load the trained models and feature names."""
     try:
-        rf_model = joblib.load('random_forest_air_pollution_model.joblib')
-        lr_model = joblib.load('linear_regression_air_pollution_model.joblib')
-        feature_names = joblib.load('feature_names.joblib')
+        with st.spinner('Loading AI models... This may take a moment.'):
+            rf_model = joblib.load('random_forest_air_pollution_model.joblib')
+            lr_model = joblib.load('linear_regression_air_pollution_model.joblib')
+            feature_names = joblib.load('feature_names.joblib')
+        st.success('Models loaded successfully!')
         return rf_model, lr_model, feature_names
     except FileNotFoundError as e:
         st.error(f"Model files not found: {e}")
         st.error("Make sure all .joblib files are in the same directory as this app.")
+        st.info("Please check the repository and ensure all .joblib files are present.")
+        return None, None, None
+    except Exception as e:
+        st.error(f"Error loading models: {e}")
+        st.error("This might be due to scikit-learn version compatibility issues.")
         return None, None, None
 
 def get_country_list(feature_names):
@@ -81,6 +88,8 @@ def main():
     rf_model, lr_model, feature_names = load_models()
     
     if rf_model is None:
+        st.error("⚠️ Failed to load models. Please try refreshing the page.")
+        st.info("If the problem persists, the models might be too large for Streamlit Cloud's free tier.")
         st.stop()
     
     # Title and description
