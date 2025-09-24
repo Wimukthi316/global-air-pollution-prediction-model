@@ -20,14 +20,14 @@ def load_models():
     """Load the trained models and feature names."""
     try:
         with st.spinner('Loading AI models... This may take a moment.'):
-            rf_model = joblib.load('random_forest_air_pollution_model.joblib')
-            lr_model = joblib.load('linear_regression_air_pollution_model.joblib')
-            feature_names = joblib.load('feature_names.joblib')
+            rf_model = joblib.load('models/random_forest_air_pollution_model.joblib')
+            lr_model = joblib.load('models/linear_regression_air_pollution_model.joblib')
+            feature_names = joblib.load('models/feature_names.joblib')
         st.success('Models loaded successfully!')
         return rf_model, lr_model, feature_names
     except FileNotFoundError as e:
         st.error(f"Model files not found: {e}")
-        st.error("Make sure all .joblib files are in the same directory as this app.")
+        st.error("Make sure all .joblib files are in the models/ directory.")
         st.info("Please check the repository and ensure all .joblib files are present.")
         return None, None, None
     except Exception as e:
