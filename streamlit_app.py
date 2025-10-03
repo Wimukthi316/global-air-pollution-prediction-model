@@ -215,7 +215,7 @@ def main():
             st.markdown(f"""
             **Prediction:** {lr_prediction:.1f}  
             **Category:** <span style="color: {lr_color}; font-weight: bold;">{lr_category}</span>  
-            **Model Accuracy:** Poor (Not Recommended)
+            **Model Accuracy:**
             """, unsafe_allow_html=True)
             
             if lr_prediction < 0:
